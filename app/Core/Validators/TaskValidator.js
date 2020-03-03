@@ -7,7 +7,12 @@ const rules = {
         .required(),
     date: Joi.date().iso().required(),
     description: Joi.string(),
-    sequenceNumber: Joi.number().min(1).max(3).required()
+    sequenceNumber: Joi.number().min(1).max(3).required(),
+    createdBy: Joi.string()
+    .alphanum()
+    .length(3)
+    .required(),
+    createdAt: Joi.date().iso().required(),
 };
 const schema = Joi.object(rules);
 const validateOrThrow = (task) => {
