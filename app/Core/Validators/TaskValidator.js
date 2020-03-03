@@ -14,8 +14,7 @@ const validateOrThrow = (task) => {
     const validation = schema.validate(task);
   
     if (validation.error) {
-      //throw new ValidationException(validation.error);
-      console.log("erreur de validation");
+      throw new ValidationException(validation.error);
     }
   };
   
