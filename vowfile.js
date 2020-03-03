@@ -1,4 +1,10 @@
-'use strict'
+const chai = require('chai');
+const chaiDatetime = require('chai-datetime');
+const chaiAsPromised = require('chai-as-promised');
+
+chai.use(chaiAsPromised);
+chai.use(chaiDatetime);
+
 
 /*
 |--------------------------------------------------------------------------
