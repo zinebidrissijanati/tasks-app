@@ -1,5 +1,5 @@
 const Joi = require('@hapi/joi');
-
+const ValidationException = use('App/Exceptions/ValidationException');
 const rules = {
     title: Joi.string()
         .min(10)
