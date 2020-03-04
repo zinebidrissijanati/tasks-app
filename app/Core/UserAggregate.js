@@ -15,8 +15,8 @@ class UserAggregate {
     ];
   }
 
-  async findOrFail(ldap) {
-    const user = await this.userModel.findOne({ ldap });
+  async findOrFail(ref) {
+    const user = await this.userModel.findOne({ ref });
 
     if (!user) {
       throw new NotFoundException();
@@ -25,7 +25,7 @@ class UserAggregate {
     return user;
   }
 
-  async getOneByLdap(ref, perfomedBy) {
+  async getOneByRef(ref, perfomedBy) {
     if (!isUserAccessingOwnData(ref, perfomedBy.ref)) {
       await this.grantService.grantOrFail(perfomedBy.ref, this.requiredRoles);
     }
@@ -41,7 +41,7 @@ class UserAggregate {
     return this.userModel.find().skip(skips).limit(pagination.perPage);
   }
 
-  async deleteOneByLdap(ref, perfomedBy) {
+  async deleteOneByRef(ref, perfomedBy) {
     await this.grantService.grantOrFail(perfomedBy.ref, this.requiredRoles);
 
     return this.userModel.deleteOne({ ref });
