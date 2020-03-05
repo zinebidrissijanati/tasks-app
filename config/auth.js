@@ -1,9 +1,17 @@
-'use strict'
 
 /** @type {import('@adonisjs/framework/src/Env')} */
-const Env = use('Env')
+const Env = use('Env');
 
 module.exports = {
+  oauth: {
+    url: Env.get('OAUTH_SERVER_URL'),
+    clientId: Env.get('OAUTH_CLIENT_ID'),
+    clientSecret: Env.get('OAUTH_CLIENT_SECRET'),
+    key: Buffer.from(
+      `${Env.get('OAUTH_CLIENT_ID')}:${Env.get('OAUTH_CLIENT_SECRET')}`,
+    ).toString('base64'),
+  },
+
   /*
   |--------------------------------------------------------------------------
   | Authenticator
@@ -16,7 +24,7 @@ module.exports = {
   | Available Serializers - lucid, database
   |
   */
-  authenticator: 'jwt',
+  // authenticator: 'jwt'
 
   /*
   |--------------------------------------------------------------------------
@@ -27,13 +35,13 @@ module.exports = {
   | Session authentication is always persistent.
   |
   */
-  session: {
-    serializer: 'lucid',
+  /* session: {
+    serializer: 'LucidMongo',
     model: 'App/Models/User',
     scheme: 'session',
     uid: 'email',
     password: 'password'
-  },
+  }, */
 
   /*
   |--------------------------------------------------------------------------
@@ -48,13 +56,13 @@ module.exports = {
   | login credentials on each request.
   |
   */
-  basic: {
-    serializer: 'lucid',
+  /* basic: {
+    serializer: 'LucidMongo',
     model: 'App/Models/User',
     scheme: 'basic',
     uid: 'email',
     password: 'password'
-  },
+  }, */
 
   /*
   |--------------------------------------------------------------------------
@@ -65,16 +73,18 @@ module.exports = {
   | via HTTP `Authorization` header.
   |
   */
-  jwt: {
-    serializer: 'lucid',
+  /* jwt: {
+    serializer: 'LucidMongo',
     model: 'App/Models/User',
+    token: 'App/Models/Token',
     scheme: 'jwt',
     uid: 'email',
     password: 'password',
+    expiry: '20m',
     options: {
       secret: Env.get('APP_KEY')
     }
-  },
+  }, */
 
   /*
   |--------------------------------------------------------------------------
@@ -82,13 +92,15 @@ module.exports = {
   |--------------------------------------------------------------------------
   |
   | The Api scheme makes use of API personal tokens to authenticate a user.
-  |
+  |username
   */
-  api: {
-    serializer: 'lucid',
-    model: 'App/Models/User',
+  /* api: {
+    serializer: 'LucidMongo',
     scheme: 'api',
-    uid: 'email',
-    password: 'password'
-  }
-}
+    model: 'App/Models/User',
+    token: 'App/Models/Token',
+    uid: 'username',
+    password: '',
+    expiry: '30d'
+  } */
+};
